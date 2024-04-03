@@ -21,7 +21,20 @@ public class MemberViewController {
 	@GetMapping("/join")
 	public String openJoin() {
 		LOGGER.info("회원가입 화면 이동");
-		return "join";
+		return "member/join";
+	}
+	
+	/**
+	 * 메소드 이름 : openLogin
+	 * 방식 : get
+	 * URL : /login
+	 * 화면 : member/login.jsp
+	 */
+	
+	@GetMapping("/login")
+	public String openLogin() {
+		LOGGER.info("로그인 화면 이동");
+		return "member/login";
 	}
 	
 }

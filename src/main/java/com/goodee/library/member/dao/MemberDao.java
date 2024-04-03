@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.goodee.library.member.dto.MemberDto;
@@ -20,6 +21,10 @@ public class MemberDao {
 
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	PasswordEncoder passwordEncorder;
+	
 	private final String namespace = "com.goodee.library.memberMapper.";
 	
 	public int idDoubleCheck(String m_id) {
@@ -42,8 +47,34 @@ public class MemberDao {
 	}
 
 	public int createMember(MemberDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		LOGGER.info("회원정보 데이터베이스 추가");
+		int result = 0;
+		try {
+			dto.setM_pw(passwordEncorder.encode(dto.getM_pw()));
+			result = sqlSession.insert(namespace+"createMember",dto);
+		} catch(Exception e) {
+			StringWriter errors = new StringWriter();
+	        e.printStackTrace(new PrintWriter(errors));
+	        LOGGER.error(errors.toString());
+		}
+		return result;
+	}
+	
+	public MemberDto selectMemberOne(MemberDto dto) {
+		LOGGER.info("아이디 기준 멤버 조회");
+		MemberDto loginedDto = new MemberDto();
+		try {
+			loginedDto = sqlSession.selectOne(namespace+"selectMemberOne",dto.getM_id());
+			if(loginedDto != null) {
+				// 비밀번호 일치여부 확인
+				if(!passwordEncorder.matches(dto.getM_pw(), loginedDto.getM_pw())) {
+					loginedDto = null;
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return loginedDto;
 	}
 	
 	
