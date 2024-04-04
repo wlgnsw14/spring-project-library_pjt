@@ -1,6 +1,7 @@
 package com.goodee.library.member.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -68,6 +69,41 @@ public class MemberService {
 			map.put("res_msg",loginedMember.getM_name()+"님 환영합니다!");
 		}
 		
+		return map;
+	}
+
+	public List<MemberDto> selectMemberAll() {
+		LOGGER.info("회원 목록 조회 요청");
+		// dao에게 List<MemberDto>정보 전달 받아와서
+		// controller에게 return 해주기
+		return dao.selectMemberAll();
+	}
+
+	public Map<String, String> updateMember(MemberDto dto, HttpSession session) {
+		// updateMember 메소드
+		// 1. Map 구성(res_code, res_msg)
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("res_code","404");
+		map.put("res_msg","오류가 발생했습니다.");
+		try {
+			if(dao.updateMember(dto) > 0) {
+				map.put("res_code","200");
+				map.put("res_msg","정상적으로 정보가 수정되었습니다.");
+				MemberDto updatedMember = dao.selectUpdateMember(dto.getM_no());
+				session.setAttribute("loginedMember", updatedMember);
+				session.setMaxInactiveInterval(60*30); // 초 단위
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		// -> 상황에 따라 다르게 구성(200, 404)
+		// 200 - 회원정보 수정 성공
+		// 400 - 회원정보 수정에 실패하였습니다
+		// 2. dao에게 회원정보 수정 요청
+		// -> where 절을 잊지 말자
+		// 3. session 셋팅 다시
+		// -> m_no 기준으로 회원정보 조회 MemberDto
+		// -> loginMmeber 메소드 참고
 		return map;
 	}
 	

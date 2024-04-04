@@ -2,6 +2,8 @@ package com.goodee.library.member.dao;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
@@ -72,9 +74,44 @@ public class MemberDao {
 				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			StringWriter errors = new StringWriter();
+	        e.printStackTrace(new PrintWriter(errors));
+	        LOGGER.error(errors.toString());
 		}
 		return loginedDto;
+	}
+
+	public List<MemberDto> selectMemberAll() {
+		LOGGER.info("회원 목록 조회");
+		List<MemberDto> resultList = new ArrayList<MemberDto>();
+		try {
+			resultList = sqlSession.selectList(namespace+"selectMemberAll");
+		} catch(Exception e) {
+			StringWriter errors = new StringWriter();
+	        e.printStackTrace(new PrintWriter(errors));
+	        LOGGER.error(errors.toString());
+		}
+		return resultList;
+	}
+
+	public int updateMember(MemberDto dto) {
+		int resultInt = 0;
+		try {
+			resultInt = sqlSession.update(namespace+"updateMember",dto);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return resultInt;
+	}
+
+	public MemberDto selectUpdateMember(long m_no) {
+		MemberDto updatedMember = new MemberDto();
+		try {
+			updatedMember = sqlSession.selectOne(namespace+"updatedMemberSelect",m_no);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return updatedMember;
 	}
 	
 	
