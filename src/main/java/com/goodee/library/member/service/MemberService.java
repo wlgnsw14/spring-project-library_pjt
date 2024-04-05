@@ -62,7 +62,7 @@ public class MemberService {
 		MemberDto loginedMember = dao.selectMemberOne(dto);
 		
 		if(loginedMember != null) {
-			if(loginedMember.getM_flag().equals("N")) {
+			if("N".equals(loginedMember.getM_flag())) {
 				map.put("res_code","409");
 				map.put("res_msg","이미 탈퇴한 회원입니다.");
 			}else {
@@ -112,7 +112,7 @@ public class MemberService {
 		return map;
 	}
 
-	public Map<String, String> deleteMember(long m_no) {
+	public Map<String, String> deleteMember(long m_no, HttpSession session) {
 		// 1. deleteMember 메소드 구성
 		// 2. return Map -> 초기값 설정 후 결과에 따라서 변화
 		// 3. dao에게 회원 정보 업데이트 요청
@@ -123,7 +123,8 @@ public class MemberService {
 		try {
 			if(dao.deleteMember(m_no) > 0) {
 				map.put("res_code","200");
-				map.put("res_msg","회원 탈퇴 처리가 되었습니다.");				
+				map.put("res_msg","정상적으로 회원 탈퇴되었습니다.");
+				session.invalidate();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -85,7 +85,7 @@
               title: '성공' ,
               text: data.res_msg
             }).then((result)=>{
-               location.href='/book';
+               location.href='/';
             });
          } else{
             Swal.fire({

@@ -62,9 +62,9 @@ public class MemberApiController {
 	
 	@DeleteMapping("/member/{m_no}")
 	@ResponseBody
-	public Map<String, String> deleteMember(@PathVariable("m_no") long m_no){
+	public Map<String, String> deleteMember(@PathVariable("m_no") long m_no, HttpSession session){
 		LOGGER.info("회원 정보 삭제");
-		return service.deleteMember(m_no);
+		return service.deleteMember(m_no, session);
 	}
 	
 	
