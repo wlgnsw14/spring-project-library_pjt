@@ -95,24 +95,32 @@ public class MemberDao {
 	}
 
 	public int updateMember(MemberDto dto) {
-		int resultInt = 0;
+		int result = 0;
 		try {
-			resultInt = sqlSession.update(namespace+"updateMember",dto);
+			result = sqlSession.update(namespace+"updateMember",dto);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return resultInt;
+		return result;
 	}
 
-	public MemberDto selectUpdateMember(long m_no) {
-		MemberDto updatedMember = new MemberDto();
+	public MemberDto selectMemberByNo(long m_no) {
+		MemberDto dto = new MemberDto();
 		try {
-			updatedMember = sqlSession.selectOne(namespace+"updatedMemberSelect",m_no);
+			dto = sqlSession.selectOne(namespace+"selectMemberByNo",m_no);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return updatedMember;
+		return dto;
 	}
-	
-	
+
+	public int deleteMember(long m_no) {
+		int result = 0;
+		try {
+			result = sqlSession.update(namespace+"deleteMember",m_no);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

@@ -34,12 +34,17 @@
 		</where>
 	</update>
 	
-	<select id="updatedMemberSelect" parameterType="int" resultType="com.goodee.library.member.dto.MemberDto">
+	<select id="selectMemberByNo" parameterType="Long" resultType="com.goodee.library.member.dto.MemberDto">
 		SELECT * FROM tbl_member
 		<where>
 			m_no = #{m_no}
 		</where>
 	</select>
 	
-	
+	<update id="deleteMember" parameterType="Long">
+		UPDATE tbl_member SET m_flag = 'N'
+		<where>
+			m_no = #{m_no}
+		</where>
+	</update>
 </mapper>

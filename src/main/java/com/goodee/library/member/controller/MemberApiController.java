@@ -8,7 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,8 +55,16 @@ public class MemberApiController {
 	@PostMapping("/member/{m_no}")
 	@ResponseBody
 	public Map<String, String> memberEdit(@RequestBody MemberDto dto, HttpSession session){
-		LOGGER.info("회원정보 수정 기능");
+		LOGGER.info("회원 정보 수정 기능");
 		return service.updateMember(dto, session);
+	}
+	
+	
+	@DeleteMapping("/member/{m_no}")
+	@ResponseBody
+	public Map<String, String> deleteMember(@PathVariable("m_no") long m_no){
+		LOGGER.info("회원 정보 삭제");
+		return service.deleteMember(m_no);
 	}
 	
 	
