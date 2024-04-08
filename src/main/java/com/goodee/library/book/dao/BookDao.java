@@ -1,7 +1,10 @@
 package com.goodee.library.book.dao;
 
+import java.awt.print.Book;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
@@ -32,6 +35,29 @@ public class BookDao {
 	        LOGGER.error(errors.toString());
 		}
 		return result;
+	}
+
+	public int selectBookCount() {
+		int result = 0;
+		try {
+			result = sqlSession.selectOne(namespace+"selectBookCount");
+		} catch(Exception e) {
+			StringWriter errors = new StringWriter();
+	        e.printStackTrace(new PrintWriter(errors));
+	        LOGGER.error(errors.toString());
+		}
+		return result;
+	}
+
+	public List<BookDto> selectBoookList(BookDto dto) {
+		LOGGER.info("전체 도서 목록 조회");
+		List<BookDto> resultList = new ArrayList<BookDto>();
+		try {
+			resultList = sqlSession.selectList(namespace+"selectBookList",dto);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return resultList;
 	}
 
 }

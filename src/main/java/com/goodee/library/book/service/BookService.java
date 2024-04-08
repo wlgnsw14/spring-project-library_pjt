@@ -1,5 +1,7 @@
 package com.goodee.library.book.service;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,14 @@ public class BookService {
 
 	public int createBook(BookDto dto) {
 		return bookDao.createBook(dto);
+	}
+
+	public int selectBookCount() {
+		return bookDao.selectBookCount();
+	}
+	
+	public List<BookDto> selectBookList(BookDto dto){
+		return bookDao.selectBoookList(dto);
 	}
 	
 	
