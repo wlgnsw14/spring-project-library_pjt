@@ -23,12 +23,16 @@ public class BookService {
 		return bookDao.createBook(dto);
 	}
 
-	public int selectBookCount() {
-		return bookDao.selectBookCount();
+	public int selectBookCount(String b_name) {
+		return bookDao.selectBookCount(b_name);
 	}
 	
 	public List<BookDto> selectBookList(BookDto dto){
 		return bookDao.selectBoookList(dto);
+	}
+
+	public List<BookDto> selectBookListToday() {
+		return bookDao.selectBookListToday();
 	}
 	
 	

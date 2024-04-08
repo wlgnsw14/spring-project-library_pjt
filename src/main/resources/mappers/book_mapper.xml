@@ -7,12 +7,29 @@
 	</insert>
 	
 	<select id="selectBookCount" resultType="int">
-		SELECT COUNT(*) FROM tbl_book;
+		SELECT COUNT(*) FROM tbl_book
+		<where>
+			<if test="b_name != null and b_name.equals('') == false">
+				b_name LIKE CONCAT('%',#{b_name},'%')
+			</if>
+		</where>
 	</select>
 	
 	<select id="selectBookList" parameterType="com.goodee.library.book.dto.BookDto" resultType="com.goodee.library.book.dto.BookDto">
 		SELECT * FROM tbl_book
+		<where>
+			<if test="b_name != null and b_name.equals('') == false">
+				b_name LIKE CONCAT('%',#{b_name},'%')
+			</if>
+		</where>
 			ORDER BY b_reg_date DESC
 				LIMIT #{limit_pageNo}, #{numPerPage}
+	</select>
+	
+	<select id="selectBookListToday" resultType="com.goodee.library.book.dto.BookDto">
+		SELECT * FROM tbl_book
+		<where>
+			DATE_FORMAT(b_reg_date, '%Y-%m-%d') = CURDATE()
+		</where>
 	</select>
 </mapper>

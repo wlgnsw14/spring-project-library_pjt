@@ -37,10 +37,10 @@ public class BookDao {
 		return result;
 	}
 
-	public int selectBookCount() {
+	public int selectBookCount(String b_name) {
 		int result = 0;
 		try {
-			result = sqlSession.selectOne(namespace+"selectBookCount");
+			result = sqlSession.selectOne(namespace+"selectBookCount", b_name);
 		} catch(Exception e) {
 			StringWriter errors = new StringWriter();
 	        e.printStackTrace(new PrintWriter(errors));
@@ -54,6 +54,17 @@ public class BookDao {
 		List<BookDto> resultList = new ArrayList<BookDto>();
 		try {
 			resultList = sqlSession.selectList(namespace+"selectBookList",dto);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return resultList;
+	}
+
+	public List<BookDto> selectBookListToday() {
+		LOGGER.info("오늘 날짜 도서 목록 조회");
+		List<BookDto> resultList = new ArrayList<BookDto>();
+		try {
+			resultList = sqlSession.selectList(namespace+"selectBookListToday");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

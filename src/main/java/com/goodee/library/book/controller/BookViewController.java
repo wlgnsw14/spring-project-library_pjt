@@ -29,7 +29,7 @@ public class BookViewController {
 		// 2. bookService : selectBookCount
 		// 3. bookDao : selectBookCount
 		// 4. 쿼리 : tbl_book 테이블 전체 데이터 개수 조회
-		int totalData = bookService.selectBookCount();
+		int totalData = bookService.selectBookCount(dto.getB_name());
 		dto.setTotalData(totalData);
 		List<BookDto> resultList = bookService.selectBookList(dto);
 		model.addAttribute("resultList",resultList);
@@ -42,6 +42,4 @@ public class BookViewController {
 		LOGGER.info("도서 등록 화면 이동");
 		return "book/add";
 	}
-	
-	
 }
