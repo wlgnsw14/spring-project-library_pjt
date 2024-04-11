@@ -34,6 +34,18 @@ public class BookService {
 	public List<BookDto> selectBookListToday() {
 		return bookDao.selectBookListToday();
 	}
+
+	public BookDto bookDetail(long b_no) {
+		return bookDao.bookDetail(b_no);
+	}
+
+	public int editBookDetail(BookDto dto) {
+		return bookDao.editBookDetail(dto);
+	}
+
+	public int deleteBook(BookDto dto) {
+		return bookDao.deleteBook(dto);
+	}
 	
 	
 	
