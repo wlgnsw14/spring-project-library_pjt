@@ -15,7 +15,7 @@ public class UploadFileService {
 	private static final Logger LOGGER =
 			LogManager.getLogger(UploadFileService.class);
 	
-	private String uploadDir = "C:\\library\\upload\\";
+	private String uploadDir = "/var/lib/tomcat9/webapps/upload";
 	
 	public String upload(MultipartFile file) {
 		LOGGER.info("파일을 서버에 저장");
@@ -27,7 +27,7 @@ public class UploadFileService {
 		UUID uuid = UUID.randomUUID();
 		String change = uuid.toString().replaceAll("-", "");
 		
-		File savedFile = new File("C:\\library\\upload\\"+change+extension);
+		File savedFile = new File(uploadDir+change+extension);
 		
 		if(savedFile.exists() == false) {
 			savedFile.mkdir();

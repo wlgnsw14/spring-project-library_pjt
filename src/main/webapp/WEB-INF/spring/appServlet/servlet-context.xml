@@ -34,6 +34,6 @@
 		</interceptor>
 	</interceptors>
 	
-	<resources mapping="/libraryUploadImg/**" location="file:///C:/library/upload/"/>
+	<resources mapping="/libraryUploadImg/**" location="file:///var/lib/tomcat9/webapps/upload/"/>
 	
 </beans:beans>
