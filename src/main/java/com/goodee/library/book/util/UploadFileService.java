@@ -15,7 +15,7 @@ public class UploadFileService {
 	private static final Logger LOGGER =
 			LogManager.getLogger(UploadFileService.class);
 	
-	private String uploadDir = "/var/lib/tomcat9/webapps/upload";
+	private String uploadDir = "/var/lib/tomcat9/webapps/upload/";
 	
 	public String upload(MultipartFile file) {
 		LOGGER.info("파일을 서버에 저장");
